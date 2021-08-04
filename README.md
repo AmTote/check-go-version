@@ -1,36 +1,36 @@
-<a name="check-node-version"></a>
-# check-node-version
-[![NPM version](http://img.shields.io/npm/v/check-node-version.svg?style=flat-square)](https://www.npmjs.org/package/check-node-version)
-[![AppVeyor build status](https://img.shields.io/appveyor/ci/parshap/check-node-version/master.svg?style=flat-square)](https://ci.appveyor.com/project/parshap/check-node-version/branch/master)
-[![Travis build status](http://img.shields.io/travis/parshap/check-node-version/master.svg?style=flat-square)](https://travis-ci.org/samsaggace/check-node-version)
+<a name="check-go-version"></a>
+# check-go-version
+[![NPM version](http://img.shields.io/npm/v/check-go-version.svg?style=flat-square)](https://www.npmjs.org/package/check-go-version)
+[![AppVeyor build status](https://img.shields.io/appveyor/ci/AmTote/check-go-version/master.svg?style=flat-square)](https://ci.appveyor.com/project/AmTote/check-go-version/branch/master)
+[![Travis build status](http://img.shields.io/travis/AmTote/check-go-version/master.svg?style=flat-square)](https://travis-ci.org/AmTote/check-go-version)
 
-Check installed versions of `node`, `npm`, `npx`, and `yarn`.
+Check installed versions of `go`.
 
-* [check-node-version](#check-node-version)
-    * [Install](#check-node-version-install)
-    * [Command Line Usage](#check-node-version-command-line-usage)
-        * [Examples](#check-node-version-command-line-usage-examples)
-    * [API Usage](#check-node-version-api-usage)
+* [check-go-version](#check-go-version)
+    * [Install](#check-go-version-install)
+    * [Command Line Usage](#check-go-version-command-line-usage)
+        * [Examples](#check-go-version-command-line-usage-examples)
+    * [API Usage](#check-go-version-api-usage)
 
 
-<a name="check-node-version-install"></a>
+<a name="check-go-version-install"></a>
 ## Install
 
-[npm: *check-node-version*](https://www.npmjs.com/package/check-node-version)
+[npm: *check-go-version*](https://www.npmjs.com/package/check-go-version)
 
 ```bash
-npm install check-node-version
+npm install check-go-version
 ```
 
-<a name="check-node-version-command-line-usage"></a>
+<a name="check-go-version-command-line-usage"></a>
 ## Command Line Usage
 
 ```
 SYNOPSIS
-      check-node-version [OPTIONS]
+      check-go-version [OPTIONS]
 
 DESCRIPTION
-      check-node-version will check if the current node, npm, npx and yarn
+      check-go-version will check if the current go
       versions match the given semver version ranges.
 
       If the given version is not satisfied, information about
@@ -39,28 +39,9 @@ DESCRIPTION
 
 OPTIONS
 
-      --node VERSION
+      --go VERSION
             Check that the current node version matches the given semver
             version range.
-
-      --npm VERSION
-            Check that the current npm version matches the given semver
-            version range.
-
-      --npx VERSION
-            Check that the current npx version matches the given semver
-            version range.
-
-      --yarn VERSION
-            Check that the current yarn version matches the given semver
-            version range.
-
-      --package
-            Use the "engines" key in the current package.json for the
-            semver version ranges.
-      
-      --volta
-            Use the versions pinned by Volta in the package.json
 
       -p, --print
             Print installed versions.
@@ -70,125 +51,56 @@ OPTIONS
 
 ```
 
-<a name="check-node-version-command-line-usage-examples"></a>
+<a name="check-go-version-command-line-usage-examples"></a>
 ### Examples
 
-<a name="check-node-version-command-line-usage-examples-check-for-node-6-failing"></a>
-#### Check for node 6, failing
+<a name="check-go-version-command-line-usage-examples-check-for-go-1-16-failing"></a>
+#### Check for go 1.16, failing
 
-Check for node 6, but have 8.2.1 installed.
+Check for go 1.16, but have 1.15 installed.
 
 ```bash
-$ check-node-version --node 6
-node: 8.2.1
-Error: Wanted node version 6 (>=6.0.0 <7.0.0)
-To install node, run `nvm install 6` or see https://nodejs.org/
+$ check-go-version --go 1.16
+go: 1.15
+Error: Wanted go version 1.16 (>=1.16.0 <1.17.0)
+To install go, run `gvm install go1.16.0` 
 $ echo $?
 1
 ```
 
-<a name="check-node-version-command-line-usage-examples-check-for-node-6-passing"></a>
-#### Check for node 6, passing
+<a name="check-go-version-command-line-usage-examples-check-for-go-1-16-passing"></a>
+#### Check for go 1.16, passing
 
 If all versions match, there is no output:
 
 ```bash
-$ check-node-version --node 6
+$ check-go-version --go 1.16
 $ echo $?
 0
 ```
-
-<a name="check-node-version-command-line-usage-examples-check-for-multiple-versions-simultaneously"></a>
-#### Check for multiple versions simultaneously
-
-You can check versions of any combinations of `node`, `npm`, `npx`, and `yarn`
-at one time.
-
-```bash
-$ check-node-version --node 4 --npm 2.14 --npx 6 --yarn 0.17.1
-```
-
-<a name="check-node-version-command-line-usage-examples-check-for-volta-pinned-versions"></a>
-#### Check for volta pinned versions
-
-You can check versions pinned by [Volta](https://volta.sh/):
-
-```bash
-$ check-node-version --volta
-```
-
-<a name="check-node-version-command-line-usage-examples-print-installed-versions"></a>
-#### Print installed versions
-
-Use the `--print` option to print currently installed versions.
-If given a tool to check, only that will be printed.
-Otherwise, all known tools will be printed.
-Notes a missing tool.
-
-```bash
-$ check-node-version --print --node 11.12
-node: 11.12.0
-$ echo $?
-0
-```
-
-```powershell
-$ check-node-version --print
-yarn: not found
-node: 11.12.0
-npm: 6.9.0
-npx: 10.2.0
-$ $LASTEXITCODE
-0
-```
-
-> **NOTE:**
-> Both preceding examples show that this works equally cross-platform,
-> the first one being a *nix shell, the second one running on Windows.
-
-> **NOTE:**
-> As per [Issue 36](https://github.com/parshap/check-node-version/issues/36),
-> non-semver-compliant versions (looking at yarn here) will be handled similarly to missing tools,
-> just with a different error message.
->
-> At the time of writing, we think that
-> 1. all tools should always use semver
-> 2. exceptions are bound too be very rare
-> 3. preventing a crash is sufficient
->
-> Consequently, we do not intend to support non-compliant versions to any further extent.
-
-
-<a name="check-node-version-command-line-usage-examples-use-with-a-nvmrc-file"></a>
-#### Use with a <code>.nvmrc</code> file
-
-```bash
-$ check-node-version --node $(cat .nvmrc) --npm 2.14
-```
-
-<a name="check-node-version-command-line-usage-examples-use-with-npm-test"></a>
+<a name="check-go-version-command-line-usage-examples-use-with-npm-test"></a>
 #### Use with <code>npm test</code>
 
 ```json
 {
   "name": "my-package",
   "devDependencies": {
-    "check-node-version": "^1.0.0"
+    "check-go-version": "^1.0.0"
   },
   "scripts": {
-    "test": "check-node-version --node '>= 4.2.3' && node my-tests.js"
+    "test": "check-go-version --go '>= 1.16' && node my-tests.js"
   }
 }
 ```
 
-<a name="check-node-version-api-usage"></a>
+<a name="check-go-version-api-usage"></a>
 ## API Usage
 
 This module can also be used programmatically.
-Pass it an object with the required versions of `node`, `npm`, `npx`, and/or `yarn` followed by a results handler.
+Pass it an object with the required versions of `go` followed by a results handler.
 
 ```javascript
-const check = require("check-node-version");
+const check = require("check-go-version");
 
 check(
     { node: ">= 18.3", },

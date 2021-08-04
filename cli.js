@@ -13,20 +13,16 @@ const tools = require("./tools");
 
 const argv = minimist(process.argv.slice(2), {
   alias: {
-    "print": "p",
     "help": "h",
+    "print": "p",
   },
   boolean: [
-    "print",
     "help",
-    "volta",
+    "print",
     "package",
   ],
   string: [
-    "node",
-    "npm",
-    "npx",
-    "yarn",
+    "go",
   ],
   unknown: function (arg) {
     console.error(`Unknown option: ${arg}`);
@@ -46,8 +42,6 @@ if (argv.help) {
 let options;
 if (argv.package) {
   options = optionsFromPackage();
-} else if (argv.volta) {
-  options = optionsFromVolta();
 } else {
   options = optionsFromCommandLine();
 }
@@ -94,32 +88,6 @@ function optionsFromPackage() {
   return Object.keys(tools).reduce((memo, name) => ({
     ...memo,
     [name]: packageJson.engines[name],
-  }), {});
-}
-
-function optionsFromVolta() {
-  let packageJson;
-
-  try {
-    packageJson = require(path.join(process.cwd(), 'package.json'));
-  } catch (e) {
-    console.log('Error: When running with --volta, a package.json file is expected in the current working directory');
-    console.log('Current working directory is: ' + process.cwd());
-
-    process.exit(1);
-  }
-
-  if (!packageJson.volta) {
-    console.log('Error: When running with --volta, your package.json is expected to contain the "volta" key');
-    console.log('See https://docs.volta.sh/guide/understanding#pinning-node-engines');
-
-    process.exit(1);
-  }
-  console.log(packageJson.volta);
-
-  return Object.keys(tools).reduce((memo, name) => ({
-    ...memo,
-    [name]: packageJson.volta[name],
   }), {});
 }
 

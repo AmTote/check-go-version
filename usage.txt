@@ -1,8 +1,8 @@
 SYNOPSIS
-      check-node-version [OPTIONS]
+      check-go-version [OPTIONS]
 
 DESCRIPTION
-      check-node-version will check if the current node, npm, npx and yarn
+      check-go-version will check if the current go
       versions match the given semver version ranges.
 
       If the given version is not satisfied, information about
@@ -11,28 +11,9 @@ DESCRIPTION
 
 OPTIONS
 
-      --node VERSION
+      --go VERSION
             Check that the current node version matches the given semver
             version range.
-
-      --npm VERSION
-            Check that the current npm version matches the given semver
-            version range.
-
-      --npx VERSION
-            Check that the current npx version matches the given semver
-            version range.
-
-      --yarn VERSION
-            Check that the current yarn version matches the given semver
-            version range.
-
-      --package
-            Use the "engines" key in the current package.json for the
-            semver version ranges.
-      
-      --volta
-            Use the versions pinned by Volta in the package.json
 
       -p, --print
             Print installed versions.

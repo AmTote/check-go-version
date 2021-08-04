@@ -1,18 +1,18 @@
-# check-node-version
+# check-go-version
 {"gitdown": "badge", "name": "npm-version"}
 {"gitdown": "badge", "name": "appveyor"}
 {"gitdown": "badge", "name": "travis"}
 
-Check installed versions of `node`, `npm`, `npx`, and `yarn`.
+Check installed versions of `go`.
 
 {"gitdown": "contents"}
 
 ## Install
 
-[npm: *check-node-version*](https://www.npmjs.com/package/check-node-version)
+[npm: *check-go-version*](https://www.npmjs.com/package/check-go-version)
 
 ```bash
-npm install check-node-version
+npm install check-go-version
 ```
 
 ## Command Line Usage
@@ -23,103 +23,38 @@ npm install check-node-version
 
 ### Examples
 
-#### Check for node 6, failing
+#### Check for go 1.16, failing
 
-Check for node 6, but have 8.2.1 installed.
+Check for go 1.16, but have 1.15 installed.
 
 ```bash
-$ check-node-version --node 6
-node: 8.2.1
-Error: Wanted node version 6 (>=6.0.0 <7.0.0)
-To install node, run `nvm install 6` or see https://nodejs.org/
+$ check-go-version --go 1.16
+go: 1.15
+Error: Wanted go version 1.16 (>=1.16.0 <1.17.0)
+To install go, run `gvm install go1.16.0` 
 $ echo $?
 1
 ```
 
-#### Check for node 6, passing
+#### Check for go 1.16, passing
 
 If all versions match, there is no output:
 
 ```bash
-$ check-node-version --node 6
+$ check-go-version --go 1.16
 $ echo $?
 0
 ```
-
-#### Check for multiple versions simultaneously
-
-You can check versions of any combinations of `node`, `npm`, `npx`, and `yarn`
-at one time.
-
-```bash
-$ check-node-version --node 4 --npm 2.14 --npx 6 --yarn 0.17.1
-```
-
-#### Check for volta pinned versions
-
-You can check versions pinned by [Volta](https://volta.sh/):
-
-```bash
-$ check-node-version --volta
-```
-
-#### Print installed versions
-
-Use the `--print` option to print currently installed versions.
-If given a tool to check, only that will be printed.
-Otherwise, all known tools will be printed.
-Notes a missing tool.
-
-```bash
-$ check-node-version --print --node 11.12
-node: 11.12.0
-$ echo $?
-0
-```
-
-```powershell
-$ check-node-version --print
-yarn: not found
-node: 11.12.0
-npm: 6.9.0
-npx: 10.2.0
-$ $LASTEXITCODE
-0
-```
-
-> **NOTE:**
-> Both preceding examples show that this works equally cross-platform,
-> the first one being a *nix shell, the second one running on Windows.
-
-> **NOTE:**
-> As per [Issue 36](https://github.com/parshap/check-node-version/issues/36),
-> non-semver-compliant versions (looking at yarn here) will be handled similarly to missing tools,
-> just with a different error message.
->
-> At the time of writing, we think that
-> 1. all tools should always use semver
-> 2. exceptions are bound too be very rare
-> 3. preventing a crash is sufficient
->
-> Consequently, we do not intend to support non-compliant versions to any further extent.
-
-
-#### Use with a `.nvmrc` file
-
-```bash
-$ check-node-version --node $(cat .nvmrc) --npm 2.14
-```
-
 #### Use with `npm test`
 
 ```json
 {
   "name": "my-package",
   "devDependencies": {
-    "check-node-version": "^1.0.0"
+    "check-go-version": "^1.0.0"
   },
   "scripts": {
-    "test": "check-node-version --node '>= 4.2.3' && node my-tests.js"
+    "test": "check-go-version --go '>= 1.16' && node my-tests.js"
   }
 }
 ```
@@ -127,10 +62,10 @@ $ check-node-version --node $(cat .nvmrc) --npm 2.14
 ## API Usage
 
 This module can also be used programmatically.
-Pass it an object with the required versions of `node`, `npm`, `npx`, and/or `yarn` followed by a results handler.
+Pass it an object with the required versions of `go` followed by a results handler.
 
 ```javascript
-const check = require("check-node-version");
+const check = require("check-go-version");
 
 check(
     { node: ">= 18.3", },

@@ -195,7 +195,7 @@ function runVersionCommand(command, callback) {
     const commandDescription = JSON.stringify(command);
 
     if (!execError) {
-      const version = stdout.trim();
+      const version = stdout.trim().substring(0,23).replace(/[^\d.-]/g,'');
 
       if (semver.valid(version)) {
         return callback(null, {
